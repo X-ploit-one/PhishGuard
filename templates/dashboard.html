@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - PhishGuard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>PhishGuard</h1>
+
+            <p>Security Analysis Dashboard</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Dashboard Overview</h2>
+
+            <div class="result-grid">
+
+                <div class="result-box">
+
+                    <strong>Total Emails Analyzed</strong>
+
+                    <div class="risk-score">
+                        {{ total_emails }}
+                    </div>
+
+                </div>
+
+
+                <div class="result-box">
+
+                    <strong>High Risk</strong>
+
+                    <div class="risk-score risk-high">
+                        {{ high_risk }}
+                    </div>
+
+                </div>
+
+
+                <div class="result-box">
+
+                    <strong>Medium Risk</strong>
+
+                    <div class="risk-score risk-medium">
+                        {{ medium_risk }}
+                    </div>
+
+                </div>
+
+
+                <div class="result-box">
+
+                    <strong>Low Risk</strong>
+
+                    <div class="risk-score risk-low">
+                        {{ low_risk }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Average Risk Score</h2>
+
+            <div class="risk-score">
+                {{ average_risk }} / 100
+            </div>
+
+            <div class="risk-bar">
+
+                <div
+                    class="risk-bar-fill"
+                    style="width: {{ average_risk }}%; background: #2563eb;">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card navigation">
+
+            <a href="/">
+                Analyze Email
+            </a>
+
+            <a href="/history">
+                Detection History
+            </a>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

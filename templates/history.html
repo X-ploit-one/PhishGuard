@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detection History - PhishGuard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>PhishGuard</h1>
+
+            <p>Detection History</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Previous Email Analyses</h2>
+
+            {% if history %}
+
+            <div style="overflow-x:auto;">
+
+                <table style="width:100%; border-collapse:collapse;">
+
+                    <thead>
+
+                        <tr>
+
+                            <th style="padding:12px; text-align:left;">
+                                ID
+                            </th>
+
+                            <th style="padding:12px; text-align:left;">
+                                Prediction
+                            </th>
+
+                            <th style="padding:12px; text-align:left;">
+                                Spam Probability
+                            </th>
+
+                            <th style="padding:12px; text-align:left;">
+                                Risk Score
+                            </th>
+
+                            <th style="padding:12px; text-align:left;">
+                                Risk Level
+                            </th>
+
+                            <th style="padding:12px; text-align:left;">
+                                Timestamp
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for item in history %}
+
+                        <tr>
+
+                            <td style="padding:12px;">
+                                {{ item[0] }}
+                            </td>
+
+                            <td style="padding:12px;">
+                                {{ item[1]|upper }}
+                            </td>
+
+                            <td style="padding:12px;">
+                                {{ "%.2f"|format(item[2] * 100) }}%
+                            </td>
+
+                            <td style="padding:12px;">
+                                {{ item[3] }}/100
+                            </td>
+
+                            <td style="padding:12px;">
+                                {{ item[4] }}
+                            </td>
+
+                            <td style="padding:12px;">
+                                {{ item[5] }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <p>No email analyses have been recorded yet.</p>
+
+            {% endif %}
+
+        </div>
+
+
+<div class="card navigation">
+
+    <a href="/">
+        Analyze Email
+    </a>
+
+    <a href="/history">
+        Detection History
+    </a>
+
+    <a href="/dashboard">
+        Dashboard
+    </a>
+
+</div>
+
+    </div>
+
+</body>
+
+</html>

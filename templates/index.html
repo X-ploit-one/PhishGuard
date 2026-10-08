@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PhishGuard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <h1>PhishGuard</h1>
+            <p>Machine Learning Based Phishing Email Detection & Risk Analysis</p>
+        </div>
+
+
+        <!-- Email Input -->
+        <div class="card">
+
+            <h2>Analyze an Email</h2>
+
+            <p>
+                Paste an email below to check for spam and potential phishing indicators.
+            </p>
+
+            <form method="POST" action="/analyze">
+
+                <input
+    type="text"
+    name="sender"
+    placeholder="From: sender@example.com">
+
+<input
+    type="text"
+    name="recipient"
+    placeholder="To: recipient@example.com">
+
+<input
+    type="text"
+    name="subject"
+    placeholder="Subject: Email subject">
+
+<textarea
+    name="email_text"
+    placeholder="Paste the email content here..."
+    required></textarea>
+
+                <button class="analyze-button" type="submit">
+                    Analyze Email
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Results -->
+        {% if result %}
+
+        <div class="card">
+
+            <h2>PhishGuard Analysis Result</h2>
+
+            <div class="result-grid">
+
+                <div class="result-box">
+                    <strong>ML Prediction</strong>
+                    {{ result["prediction"]|upper }}
+                </div>
+
+
+                <div class="result-box">
+                    <strong>Spam Probability</strong>
+                    {{ "%.2f"|format(result["spam_probability"] * 100) }}%
+                </div><div class="result-box">
+    <strong>Risk Score</strong>
+
+    <div class="risk-score">
+        {{ result["risk_score"] }} / 100
+    </div>
+
+    <div class="risk-bar">
+        <div
+            class="risk-bar-fill
+            {% if result['risk_level'] == 'HIGH' %}
+                risk-bar-high
+            {% elif result['risk_level'] == 'MEDIUM' %}
+                risk-bar-medium
+            {% else %}
+                risk-bar-low
+            {% endif %}"
+            style="width: {{ result['risk_score'] }}%;">
+        </div>
+    </div>
+
+</div>
+
+
+                <div class="result-box">
+                    <strong>Risk Level</strong>
+
+                    <div class="risk-score
+                        {% if result['risk_level'] == 'HIGH' %}
+                            risk-high
+                        {% elif result['risk_level'] == 'MEDIUM' %}
+                            risk-medium
+                        {% else %}
+                            risk-low
+                        {% endif %}
+                    ">
+                        {{ result["risk_level"] }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Phishing Indicators -->
+
+        <div class="indicators">
+
+    <h3>Phishing Indicators</h3>
+
+    {% if result["indicators"] %}
+
+        {% for indicator in result["indicators"] %}
+
+        <div class="indicator-item">
+            <span class="indicator-icon">⚠</span>
+            <span>{{ indicator }}</span>
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="indicator-safe">
+            <span class="indicator-icon">✓</span>
+            <span>No phishing indicators detected.</span>
+        </div>
+
+    {% endif %}
+
+</div>
+
+        </div>
+
+        {% endif %}
+<div class="card navigation">
+
+    <a href="/">
+        Analyze Email
+    </a>
+
+    <a href="/history">
+        Detection History
+    </a>
+
+    <a href="/dashboard">
+        Dashboard
+    </a>
+
+</div>
+
+    </div>
+
+</body>
+
+</html>
