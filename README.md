@@ -95,7 +95,7 @@ PhishGuard is an educational cybersecurity project. Its predictions are not guar
 ## 👩‍💻 Project Contributors
 
 * Sonal Yadav
-* Sneha Kansara
+
 
 ---
 
